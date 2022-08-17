@@ -1,17 +1,12 @@
-import classProductos from "../daos/productos/productsFile/productsFile.js";
-import ProductsMongoDB from "../daos/productos/productsMongoDB.js";
-
-const productsFile = new classProductos("productos.txt");
-
-const productsMongo = new ProductsMongoDB("productos");
+import { productsDao } from "../index.js";
 
 const productController = {
   getProducts: async (req, res) => {
-    const arrayProductos = await productsFile.getAll();
-    const productId = parseInt(req.params.id);
+    const arrayProductos = await productsDao.getAll();
+    const productId = req.params.id;
 
     if (productId) {
-      const foundProduct = await productsFile.getById(productId);
+      const foundProduct = await productsDao.getById(productId);
 
       if (foundProduct) {
         return res.send(foundProduct);
@@ -20,33 +15,31 @@ const productController = {
       }
     }
 
-    // const arrayProductos = await productsMongo.getAll();
-
     return res.send(arrayProductos);
   },
 
   createProduct: async (req, res) => {
     const newProduct = { ...req.body, timestamp: Date.now() };
 
-    await productsFile.save(newProduct);
+    await productsDao.save(newProduct);
 
-    const arrayProductos = await productsFile.getAll();
+    const arrayProductos = await productsDao.getAll();
 
     return res.send(arrayProductos[arrayProductos.length - 1]);
   },
 
   deleteProduct: async (req, res) => {
-    const productId = parseInt(req.params.id);
+    const productId = req.params.id;
 
-    await productsFile.deleteById(productId);
+    await productsDao.deleteById(productId);
 
     return res.sendStatus(200);
   },
 
   updateProduct: async (req, res) => {
-    const productId = parseInt(req.params.id);
+    const productId = req.params.id;
 
-    await productsFile.updateById(productId, req.body);
+    await productsDao.updateById(productId, req.body);
 
     return res.sendStatus(200);
   },

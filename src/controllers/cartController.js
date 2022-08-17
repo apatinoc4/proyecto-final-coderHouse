@@ -1,27 +1,23 @@
-import classCarritos from "../daos/carritos/cartsFile/cartFile.js";
-import classProductos from "../daos/productos/productsFile/productsFile.js";
-
-const cartFile = new classCarritos("carritos.txt");
-const productsFile = new classProductos("productos.txt");
+import { productsDao, carritosDao } from "../index.js";
 
 const cartController = {
   getCarts: async (req, res) => {
-    const cartArray = await cartFile.getAll();
+    const cartArray = await carritosDao.getAll();
 
     return res.send(cartArray);
   },
 
   getCartProducts: async (req, res) => {
     const cartId = parseInt(req.params.id);
-    const selectedCartProducts = await cartFile.productsByCartId(cartId);
+    const selectedCartProducts = await carritosDao.productsByCartId(cartId);
 
     return res.send(selectedCartProducts);
   },
 
   createCart: async (req, res) => {
-    await cartFile.save();
+    await carritosDao.save();
 
-    const cartArray = await cartFile.getAll();
+    const cartArray = await carritosDao.getAll();
 
     res.send(cartArray[cartArray.length - 1]);
   },
@@ -29,11 +25,11 @@ const cartController = {
   addCartProduct: async (req, res) => {
     const cartId = parseInt(req.params.id);
     const prodId = parseInt(req.params.id_prod);
-    const product = await productsFile.getById(prodId);
+    const product = await productsDao.getById(prodId);
 
-    await cartFile.addCartProduct(cartId, product);
+    await carritosDao.addCartProduct(cartId, product);
 
-    const selectedCartProducts = await cartFile.productsByCartId(cartId);
+    const selectedCartProducts = await carritosDao.productsByCartId(cartId);
 
     res.send(selectedCartProducts);
   },
@@ -42,9 +38,9 @@ const cartController = {
     const cartId = parseInt(req.params.id);
     const prodId = parseInt(req.params.id_prod);
 
-    await cartFile.deleteCartProduct(cartId, prodId);
+    await carritosDao.deleteCartProduct(cartId, prodId);
 
-    const selectedCartProducts = await cartFile.productsByCartId(cartId);
+    const selectedCartProducts = await carritosDao.productsByCartId(cartId);
 
     res.send(selectedCartProducts);
   },
@@ -52,7 +48,7 @@ const cartController = {
   deleteCart: async (req, res) => {
     const cartId = parseInt(req.params.id);
 
-    await cartFile.deleteById(cartId);
+    await carritosDao.deleteById(cartId);
 
     return res.sendStatus(200);
   },
