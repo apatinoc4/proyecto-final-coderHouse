@@ -1,26 +1,27 @@
-const express = require("express");
-const router = express.Router();
-const productController = require("../controllers/productController");
-const adminCheckMiddleware = require("../middlewares/adminCheckMiddleware");
+import { Router } from "express";
+import productController from "../controllers/productController.js";
+import adminCheckMiddleware from "../middlewares/adminCheckMiddleware.js";
 
-router.get("/:id?", productController.getProducts);
+const productRoutes = new Router();
 
-router.post(
+productRoutes.get("/:id?", productController.getProducts);
+
+productRoutes.post(
   "/",
   adminCheckMiddleware("api/productos/", "createProduct"),
   productController.createProduct
 );
 
-router.put(
+productRoutes.put(
   "/:id",
   adminCheckMiddleware("/api/productos/:id", "updateProduct"),
   productController.updateProduct
 );
 
-router.delete(
+productRoutes.delete(
   "/:id",
   adminCheckMiddleware("/api/productos/:id", "deleteProduct"),
   productController.deleteProduct
 );
 
-module.exports = router;
+export default productRoutes;

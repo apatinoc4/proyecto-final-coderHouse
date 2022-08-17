@@ -1,5 +1,6 @@
 {
-  "name": "proyectoFinal",
+  "type": "module",
+  "name": "proyecto_final",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",

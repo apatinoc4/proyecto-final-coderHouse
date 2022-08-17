@@ -1,4 +1,4 @@
-const isAdmin = require("../variables/isAdmin");
+import isAdmin from "../variables/isAdmin.js";
 
 const adminCheckMiddleware = (route, method) => {
   return (req, res, next) => {
@@ -15,4 +15,4 @@ const adminCheckMiddleware = (route, method) => {
   };
 };
 
-module.exports = adminCheckMiddleware;
+export default adminCheckMiddleware;

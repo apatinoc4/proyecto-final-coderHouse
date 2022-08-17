@@ -1,15 +1,18 @@
-const express = require("express");
+import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
+import bodyParser from "body-parser";
 
-const path = require("path");
-const bodyParser = require("body-parser");
-
-const productRoutes = require("./routes/productRoutes");
-const cartRoutes = require("./routes/cartRoutes");
+import productRoutes from "./routes/productRoutes.js";
+import cartRoutes from "./routes/cartRoutes.js";
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use(express.static(path.resolve(__dirname, "../public")));
 

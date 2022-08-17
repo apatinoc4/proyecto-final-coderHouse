@@ -1,7 +1,7 @@
-const classCarritos = require("../classCarrito");
-const cartFile = new classCarritos("carritos.txt");
+import classCarritos from "../classCarrito.js";
+import classProductos from "../classContenedor.js";
 
-const classProductos = require("../classContenedor");
+const cartFile = new classCarritos("carritos.txt");
 const productsFile = new classProductos("productos.txt");
 
 const cartController = {
@@ -58,4 +58,4 @@ const cartController = {
   },
 };
 
-module.exports = cartController;
+export default cartController;

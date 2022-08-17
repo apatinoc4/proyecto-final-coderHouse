@@ -1,4 +1,4 @@
-const classProductos = require("../classContenedor");
+import classProductos from "../classContenedor.js";
 const productsFile = new classProductos("productos.txt");
 
 const productController = {
@@ -46,4 +46,4 @@ const productController = {
   },
 };
 
-module.exports = productController;
+export default productController;

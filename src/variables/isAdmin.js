@@ -1,3 +1,3 @@
 const isAdmin = true;
 
-module.exports = isAdmin;
+export default isAdmin;
