@@ -7,12 +7,14 @@ export default class Contenedor {
 
   async save(object) {
     const stringifiedObj = JSON.stringify({ ...object, id: 1 });
-    const fileExists = fs.existsSync(`./src/${this.nombre}`);
+    const fileExists = fs.existsSync(
+      `./src/daos/productos/productsFile/${this.nombre}`
+    );
 
     if (!fileExists) {
       try {
         await fs.promises.writeFile(
-          `./src/${this.nombre}`,
+          `./src/daos/productos/productsFile/${this.nombre}`,
           `[${stringifiedObj}]`
         );
 
@@ -23,7 +25,7 @@ export default class Contenedor {
     } else {
       try {
         const productArray = await fs.promises.readFile(
-          `./src/${this.nombre}`,
+          `./src/daos/productos/productsFile/${this.nombre}`,
           "utf-8"
         );
         const parsedProductArray = JSON.parse(productArray);
@@ -37,7 +39,7 @@ export default class Contenedor {
         });
 
         await fs.promises.writeFile(
-          `./src/${this.nombre}`,
+          `./src/daos/productos/productsFile/${this.nombre}`,
           JSON.stringify(parsedProductArray)
         );
 
@@ -53,7 +55,7 @@ export default class Contenedor {
   async getById(id) {
     try {
       const productArray = await fs.promises.readFile(
-        `./src/${this.nombre}`,
+        `./src/daos/productos/productsFile/${this.nombre}`,
         "utf-8"
       );
       const parsedProductArray = JSON.parse(productArray);
@@ -74,7 +76,7 @@ export default class Contenedor {
   async getAll() {
     try {
       const productArray = await fs.promises.readFile(
-        `./src/${this.nombre}`,
+        `./src/daos/productos/productsFile/${this.nombre}`,
         "utf-8"
       );
       const parsedProductArray = JSON.parse(productArray);
@@ -88,7 +90,7 @@ export default class Contenedor {
   async updateById(id, obj) {
     try {
       const productArray = await fs.promises.readFile(
-        `./src/${this.nombre}`,
+        `./src/daos/productos/productsFile/${this.nombre}`,
         "utf-8"
       );
       const parsedProductArray = JSON.parse(productArray);
@@ -108,7 +110,7 @@ export default class Contenedor {
         parsedProductArrayNoProduct.sort((a, b) => a.id - b.id);
 
         await fs.promises.writeFile(
-          `./src/${this.nombre}`,
+          `./src/daos/productos/productsFile/${this.nombre}`,
           JSON.stringify(parsedProductArrayNoProduct)
         );
 
@@ -124,7 +126,7 @@ export default class Contenedor {
   async deleteById(id) {
     try {
       const productArray = await fs.promises.readFile(
-        `./src/${this.nombre}`,
+        `./src/daos/productos/productsFile/${this.nombre}`,
         "utf-8"
       );
       const parsedProductArray = JSON.parse(productArray);
@@ -134,7 +136,7 @@ export default class Contenedor {
       );
 
       fs.promises.writeFile(
-        `./src/${this.nombre}`,
+        `./src/daos/productos/productsFile/${this.nombre}`,
         JSON.stringify(filteredProductArray)
       );
     } catch (err) {
@@ -144,7 +146,10 @@ export default class Contenedor {
 
   async deleteAll() {
     try {
-      await fs.promises.writeFile(`./src/${this.nombre}`, "[]");
+      await fs.promises.writeFile(
+        `./src/daos/productos/productsFile/${this.nombre}`,
+        "[]"
+      );
     } catch (err) {
       console.log(err);
     }

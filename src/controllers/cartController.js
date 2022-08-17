@@ -1,5 +1,5 @@
-import classCarritos from "../classCarrito.js";
-import classProductos from "../classContenedor.js";
+import classCarritos from "../daos/carritos/cartsFile/cartFile.js";
+import classProductos from "../daos/productos/productsFile/productsFile.js";
 
 const cartFile = new classCarritos("carritos.txt");
 const productsFile = new classProductos("productos.txt");

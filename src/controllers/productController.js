@@ -1,5 +1,9 @@
-import classProductos from "../classContenedor.js";
+import classProductos from "../daos/productos/productsFile/productsFile.js";
+import ProductsMongoDB from "../daos/productos/productsMongoDB.js";
+
 const productsFile = new classProductos("productos.txt");
+
+const productsMongo = new ProductsMongoDB("productos");
 
 const productController = {
   getProducts: async (req, res) => {
@@ -15,6 +19,8 @@ const productController = {
         return res.send({ error: "producto no encontrado" });
       }
     }
+
+    // const arrayProductos = await productsMongo.getAll();
 
     return res.send(arrayProductos);
   },

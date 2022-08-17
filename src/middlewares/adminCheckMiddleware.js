@@ -1,4 +1,7 @@
-import isAdmin from "../variables/isAdmin.js";
+import dotenv from "dotenv";
+dotenv.config();
+
+const isAdmin = Boolean(process.env.IS_ADMIN);
 
 const adminCheckMiddleware = (route, method) => {
   return (req, res, next) => {

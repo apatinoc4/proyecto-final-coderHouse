@@ -11,12 +11,14 @@ export default class Contenedor {
       productos: [],
     };
     const stringifiedObj = JSON.stringify({ id: 1, ...templateObj });
-    const fileExists = fs.existsSync(`./src/${this.nombre}`);
+    const fileExists = fs.existsSync(
+      `./src/daos/carritos/cartsFile/${this.nombre}`
+    );
 
     if (!fileExists) {
       try {
         await fs.promises.writeFile(
-          `./src/${this.nombre}`,
+          `./src/daos/carritos/cartsFile/${this.nombre}`,
           `[${stringifiedObj}]`
         );
 
@@ -27,7 +29,7 @@ export default class Contenedor {
     } else {
       try {
         const productArray = await fs.promises.readFile(
-          `./src/${this.nombre}`,
+          `./src/daos/carritos/cartsFile/${this.nombre}`,
           "utf-8"
         );
         const parsedCartArray = JSON.parse(productArray);
@@ -41,7 +43,7 @@ export default class Contenedor {
         });
 
         await fs.promises.writeFile(
-          `./src/${this.nombre}`,
+          `./src/daos/carritos/cartsFile/${this.nombre}`,
           JSON.stringify(parsedCartArray)
         );
 
@@ -57,7 +59,7 @@ export default class Contenedor {
   async getById(id) {
     try {
       const productArray = await fs.promises.readFile(
-        `./src/${this.nombre}`,
+        `./src/daos/carritos/cartsFile/${this.nombre}`,
         "utf-8"
       );
       const parsedProductArray = JSON.parse(productArray);
@@ -78,7 +80,7 @@ export default class Contenedor {
   async getAll() {
     try {
       const cartArray = await fs.promises.readFile(
-        `./src/${this.nombre}`,
+        `./src/daos/carritos/cartsFile/${this.nombre}`,
         "utf-8"
       );
       const parsedCartArray = JSON.parse(cartArray);
@@ -92,7 +94,7 @@ export default class Contenedor {
   async productsByCartId(id) {
     try {
       const cartArray = await fs.promises.readFile(
-        `./src/${this.nombre}`,
+        `./src/daos/carritos/cartsFile/${this.nombre}`,
         "utf-8"
       );
       const parsedCartArray = JSON.parse(cartArray);
@@ -107,7 +109,7 @@ export default class Contenedor {
   async addCartProduct(cartId, product) {
     try {
       const cartArray = await fs.promises.readFile(
-        `./src/${this.nombre}`,
+        `./src/daos/carritos/cartsFile/${this.nombre}`,
         "utf-8"
       );
       const parsedCartArray = JSON.parse(cartArray);
@@ -116,7 +118,7 @@ export default class Contenedor {
       selectedCart.productos.push(product);
 
       await fs.promises.writeFile(
-        `./src/${this.nombre}`,
+        `./src/daos/carritos/cartsFile/${this.nombre}`,
         JSON.stringify(parsedCartArray)
       );
 
@@ -129,7 +131,7 @@ export default class Contenedor {
   async deleteCartProduct(cartId, prodId) {
     try {
       const cartArray = await fs.promises.readFile(
-        `./src/${this.nombre}`,
+        `./src/daos/carritos/cartsFile/${this.nombre}`,
         "utf-8"
       );
       const parsedCartArray = JSON.parse(cartArray);
@@ -146,7 +148,7 @@ export default class Contenedor {
       );
 
       await fs.promises.writeFile(
-        `./src/${this.nombre}`,
+        `./src/daos/carritos/cartsFile/${this.nombre}`,
         JSON.stringify(parsedCartArray)
       );
 
@@ -159,7 +161,7 @@ export default class Contenedor {
   async deleteById(id) {
     try {
       const cartArray = await fs.promises.readFile(
-        `./src/${this.nombre}`,
+        `./src/daos/carritos/cartsFile/${this.nombre}`,
         "utf-8"
       );
       const parsedCartArray = JSON.parse(cartArray);
@@ -169,7 +171,7 @@ export default class Contenedor {
       );
 
       fs.promises.writeFile(
-        `./src/${this.nombre}`,
+        `./src/daos/carritos/cartsFile/${this.nombre}`,
         JSON.stringify(filteredCartArray)
       );
     } catch (err) {
@@ -179,7 +181,10 @@ export default class Contenedor {
 
   async deleteAll() {
     try {
-      await fs.promises.writeFile(`./src/${this.nombre}`, "[]");
+      await fs.promises.writeFile(
+        `./src/daos/carritos/cartsFile/${this.nombre}`,
+        "[]"
+      );
     } catch (err) {
       console.log(err);
     }
