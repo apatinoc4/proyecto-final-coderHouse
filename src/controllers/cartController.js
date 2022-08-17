@@ -8,7 +8,7 @@ const cartController = {
   },
 
   getCartProducts: async (req, res) => {
-    const cartId = parseInt(req.params.id);
+    const cartId = req.params.id;
     const selectedCartProducts = await carritosDao.productsByCartId(cartId);
 
     return res.send(selectedCartProducts);
@@ -23,8 +23,8 @@ const cartController = {
   },
 
   addCartProduct: async (req, res) => {
-    const cartId = parseInt(req.params.id);
-    const prodId = parseInt(req.params.id_prod);
+    const cartId = req.params.id;
+    const prodId = req.params.id_prod;
     const product = await productsDao.getById(prodId);
 
     await carritosDao.addCartProduct(cartId, product);
@@ -35,10 +35,12 @@ const cartController = {
   },
 
   deleteCartProduct: async (req, res) => {
-    const cartId = parseInt(req.params.id);
-    const prodId = parseInt(req.params.id_prod);
+    const cartId = req.params.id;
+    const prodId = req.params.id_prod;
 
-    await carritosDao.deleteCartProduct(cartId, prodId);
+    const product = await productsDao.getById(prodId);
+
+    await carritosDao.deleteCartProduct(cartId, product);
 
     const selectedCartProducts = await carritosDao.productsByCartId(cartId);
 
@@ -46,7 +48,7 @@ const cartController = {
   },
 
   deleteCart: async (req, res) => {
-    const cartId = parseInt(req.params.id);
+    const cartId = req.params.id;
 
     await carritosDao.deleteById(cartId);
 

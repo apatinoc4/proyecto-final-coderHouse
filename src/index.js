@@ -9,7 +9,11 @@ switch (process.env.DAO) {
     const { default: ProductsMongoDB } = await import(
       "./daos/productos/productsMongoDB.js"
     );
+    const { default: CartsMongoDB } = await import(
+      "./daos/carritos/cartsMongoDB.js"
+    );
     productsDao = new ProductsMongoDB("productos");
+    carritosDao = new CartsMongoDB("carritos");
     break;
 
   case "file":

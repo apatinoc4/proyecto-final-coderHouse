@@ -154,7 +154,7 @@ export default class CartsFile {
 
       return selectedCart.productos;
     } catch (err) {
-      console.log("Error al agregar producto al carrito");
+      console.log("Error al borrar producto del carrito");
     }
   }
 
