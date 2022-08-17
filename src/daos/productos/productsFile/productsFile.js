@@ -54,13 +54,14 @@ export default class ProductsFile {
 
   async getById(id) {
     try {
+      const intId = parseInt(id);
       const productArray = await fs.promises.readFile(
         `./src/daos/productos/productsFile/${this.nombre}`,
         "utf-8"
       );
       const parsedProductArray = JSON.parse(productArray);
       const foundProduct = parsedProductArray.find(
-        (product) => product.id === id
+        (product) => product.id === intId
       );
 
       if (foundProduct) {
@@ -89,19 +90,20 @@ export default class ProductsFile {
 
   async updateById(id, obj) {
     try {
+      const intId = parseInt(id);
       const productArray = await fs.promises.readFile(
         `./src/daos/productos/productsFile/${this.nombre}`,
         "utf-8"
       );
       const parsedProductArray = JSON.parse(productArray);
 
-      if (parsedProductArray.find((product) => product.id === id)) {
+      if (parsedProductArray.find((product) => product.id === intId)) {
         const parsedProductArrayNoProduct = parsedProductArray.filter(
-          (product) => product.id !== id
+          (product) => product.id !== intId
         );
 
         const updatedProduct = {
-          id: id,
+          id: intId,
           ...obj,
         };
 
@@ -125,6 +127,7 @@ export default class ProductsFile {
 
   async deleteById(id) {
     try {
+      const intId = parseInt(id);
       const productArray = await fs.promises.readFile(
         `./src/daos/productos/productsFile/${this.nombre}`,
         "utf-8"
@@ -132,7 +135,7 @@ export default class ProductsFile {
       const parsedProductArray = JSON.parse(productArray);
 
       const filteredProductArray = parsedProductArray.filter(
-        (product) => product.id !== id
+        (product) => product.id !== intId
       );
 
       fs.promises.writeFile(

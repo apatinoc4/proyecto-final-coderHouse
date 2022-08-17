@@ -58,13 +58,14 @@ export default class CartsFile {
 
   async getById(id) {
     try {
+      const intId = parseInt(id);
       const productArray = await fs.promises.readFile(
         `./src/daos/carritos/cartsFile/${this.nombre}`,
         "utf-8"
       );
       const parsedProductArray = JSON.parse(productArray);
       const foundProduct = parsedProductArray.find(
-        (product) => product.id === id
+        (product) => product.id === intId
       );
 
       if (foundProduct) {
@@ -93,12 +94,13 @@ export default class CartsFile {
 
   async productsByCartId(id) {
     try {
+      const intId = parseInt(id);
       const cartArray = await fs.promises.readFile(
         `./src/daos/carritos/cartsFile/${this.nombre}`,
         "utf-8"
       );
       const parsedCartArray = JSON.parse(cartArray);
-      const selectedCart = parsedCartArray.find((elem) => elem.id === id);
+      const selectedCart = parsedCartArray.find((elem) => elem.id === intId);
 
       return selectedCart.productos;
     } catch (err) {
@@ -106,14 +108,17 @@ export default class CartsFile {
     }
   }
 
-  async addCartProduct(cartId, product) {
+  async addCartProduct(id, product) {
     try {
+      const intCartId = parseInt(id);
       const cartArray = await fs.promises.readFile(
         `./src/daos/carritos/cartsFile/${this.nombre}`,
         "utf-8"
       );
       const parsedCartArray = JSON.parse(cartArray);
-      const selectedCart = parsedCartArray.find((elem) => elem.id === cartId);
+      const selectedCart = parsedCartArray.find(
+        (elem) => elem.id === intCartId
+      );
 
       selectedCart.productos.push(product);
 
@@ -130,15 +135,19 @@ export default class CartsFile {
 
   async deleteCartProduct(cartId, prodId) {
     try {
+      const intCartId = parseInt(cartId);
+      const intProdId = parseInt(prodId);
       const cartArray = await fs.promises.readFile(
         `./src/daos/carritos/cartsFile/${this.nombre}`,
         "utf-8"
       );
       const parsedCartArray = JSON.parse(cartArray);
-      const selectedCart = parsedCartArray.find((elem) => elem.id === cartId);
+      const selectedCart = parsedCartArray.find(
+        (elem) => elem.id === intCartId
+      );
 
       const filteredProductArray = selectedCart.productos.filter(
-        (elem) => elem.id !== prodId
+        (elem) => elem.id !== intProdId
       );
 
       selectedCart.productos.splice(
@@ -160,6 +169,7 @@ export default class CartsFile {
 
   async deleteById(id) {
     try {
+      const intId = parseInt(id);
       const cartArray = await fs.promises.readFile(
         `./src/daos/carritos/cartsFile/${this.nombre}`,
         "utf-8"
@@ -167,7 +177,7 @@ export default class CartsFile {
       const parsedCartArray = JSON.parse(cartArray);
 
       const filteredCartArray = parsedCartArray.filter(
-        (product) => product.id !== id
+        (product) => product.id !== intId
       );
 
       fs.promises.writeFile(
