@@ -26,6 +26,17 @@ switch (process.env.DAO) {
     productsDao = new ProductsFile("productos.txt");
     carritosDao = new CartsFile("carritos.txt");
     break;
+
+  case "firebase":
+    const { default: ProductsFirebase } = await import(
+      "./daos/productos/productsFirebase.js"
+    );
+    // const { default: CartsFile } = await import(
+    //   "./daos/carritos/cartsFile/cartFile.js"
+    // );
+    productsDao = new ProductsFirebase("productos");
+    // carritosDao = new CartsFile("carritos.txt");
+    break;
 }
 
 export { productsDao, carritosDao };
