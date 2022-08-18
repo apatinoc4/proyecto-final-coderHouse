@@ -31,11 +31,11 @@ switch (process.env.DAO) {
     const { default: ProductsFirebase } = await import(
       "./daos/productos/productsFirebase.js"
     );
-    // const { default: CartsFile } = await import(
-    //   "./daos/carritos/cartsFile/cartFile.js"
-    // );
+    const { default: CartsFirebase } = await import(
+      "./daos/carritos/cartsFirebase.js"
+    );
     productsDao = new ProductsFirebase("productos");
-    // carritosDao = new CartsFile("carritos.txt");
+    carritosDao = new CartsFirebase("carritos");
     break;
 }
 
